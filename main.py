@@ -31,10 +31,13 @@ try:
         keys.append(keyFormat % (resetKey, resetId))
         cursor.execute(tmp)
 
-    r.delete(*tuple(keys))
-    print "deleted redis keys"
-    connect.commit()
-    print "deleted mysql records"
+    if keys.__len__() > 0 :
+        r.delete(*tuple(keys))
+        print "deleted redis keys."
+        connect.commit()
+        print "deleted mysql records."
+    else :
+        print "no data needed to sync."
 except:
     connect.rollback()
-    print "some error occurs"
+    print "some error occurs."
